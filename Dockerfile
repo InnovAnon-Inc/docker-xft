@@ -5,7 +5,7 @@ COPY --from=innovanon/bzip2      /tmp/bzip2.txz      /tmp/
 COPY --from=innovanon/xz         /tmp/xz.txz         /tmp/
 COPY --from=innovanon/libpng     /tmp/libpng.txz     /tmp/
 COPY --from=innovanon/jpeg-turbo /tmp/jpeg-turbo.txz /tmp/
-COPY --from=innovanon/xft        /tmp/xft.txz        /tmp/
+#COPY --from=innovanon/xft        /tmp/xft.txz        /tmp/
 RUN cat   /tmp/*.txz  \
   | tar Jxf - -i -C / \
  && rm -v /tmp/*.txz
@@ -16,7 +16,7 @@ USER lfs
 RUN sleep 31 \
  && git clone --depth=1 --recursive       \
       https://gitlab.freedesktop.org/xorg/lib/libxft.git \
- && cd                      xft          \
+ && cd                      libxft          \
  && ./autogen.sh                          \
  && ./configure                           \
  && make                                  \
