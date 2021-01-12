@@ -8,7 +8,8 @@ COPY --from=innovanon/jpeg-turbo /tmp/jpeg-turbo.txz /tmp/
 #COPY --from=innovanon/xft        /tmp/xft.txz        /tmp/
 RUN cat   /tmp/*.txz  \
   | tar Jxf - -i -C / \
- && rm -v /tmp/*.txz
+ && rm -v /tmp/*.txz  \
+ && ldconfig
 
 FROM builder-02 as xft
 ARG LFS=/mnt/lfs
@@ -22,6 +23,7 @@ RUN sleep 31 \
  && make                                  \
  && make DESTDIR=/tmp/xft install        \
  && cd           /tmp/xft                \
+ && strip.sh .                           \
  && tar acf        ../xft.txz .          \
  && rm -rf        $LFS/sources/xft
 
